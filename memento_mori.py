@@ -83,22 +83,24 @@ def main(date_of_birth):
     st.markdown(f"\nToday you are **{age}** years old.")
     if days_until_birthday:
         if days_until_birthday > 1:
-            st.write(f"In {days_until_birthday} days you will turn {age + 1}.")
+            st.markdown(f"In :red[{days_until_birthday} days] you will turn **{age + 1}**.")
         else:
-            st.write(f"Tomorrow you will turn {age + 1}.")
-        st.write(f"")
-    st.write("\nRemember that every day could be your last.")
-    st.write(f"Will you even live to see the year {date.today().year + 1}?")
+            st.markdown(f":red[Tomorrow] you will turn **{age + 1}**.")
+    st.write("")
+    st.markdown("\nRemember that every day could be your last.")
+    st.markdown(f"Will you even live to see the year {date.today().year + 1}?\n\n")
     if age < LIFE_EXPECTANCY:
-        st.write(f"\nImagine that you will die at the age of {LIFE_EXPECTANCY}.")
+        st.write("")
+        st.markdown(f"\nImagine that you will die at the age of **{LIFE_EXPECTANCY}**.")
         st.write("Which would leave you a remaining lifespan of …")
-        st.write(
+        st.markdown(
             f"\n:red[{remaining['years']} years.] "
             f"That is {remaining['weeks']:,} weeks, "
             f"or {remaining['days']:,} days.")
         st.write("How will you spend them?")
-    st.write("\n💀 Memento mori - remember that you will die.")
-    st.write("✨ But even more important: remember to LIVE!")
+    st.write("")
+    st.markdown("\n💀 Memento mori - remember that **you will die**.")
+    st.markdown("✨ But even more important: :blue[**remember to LIVE!**")
 
 
 st.title("Memento Mori")
