@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Memento mori.
 
 Display a message about life and mortality,
@@ -8,26 +7,9 @@ based on the user's date of birth.
 from datetime import date, datetime
 
 from dateutil.relativedelta import relativedelta
+import streamlit as st
 
 LIFE_EXPECTANCY = 80
-
-
-def get_date_of_birth() -> datetime.date:
-    """Return the user's date of birth."""
-    while True:
-        user_input = input("\nWhen were you born? (YYYY-MM-DD) ")
-        try:
-            date_of_birth = datetime.strptime(user_input, "%Y-%m-%d").date()
-            if date_of_birth > date.today():
-                print(
-                    "Are you a time traveller? "
-                    "Please enter a date in the past."
-                )
-                continue
-        except ValueError:
-            print("Please enter a real date in the format YYYY-MM-DD.")
-        else:
-            return date_of_birth
 
 
 def get_age(date_of_birth) -> int:
@@ -92,35 +74,42 @@ def get_days_until_birthday(date_of_birth) -> int:
     return birthday_timedelta.days
 
 
-def main():
+def main(date_of_birth):
     """Call functions and display information."""
-    print("=== MEMENTO MORI ===")
-
-    date_of_birth = get_date_of_birth()
     age = get_age(date_of_birth)
     remaining = get_remaining_lifespan(date_of_birth, LIFE_EXPECTANCY)
     days_until_birthday = get_days_until_birthday(date_of_birth)
 
-    print(f"\nToday you are {age} years old.")
+    st.markdown(f"\nToday you are **{age}** years old.")
     if days_until_birthday:
         if days_until_birthday > 1:
-            print(f"In {days_until_birthday} days", end=" ")
+            st.write(f"In {days_until_birthday} days you will turn {age + 1}.")
         else:
-            print("Tomorrow", end=" ")
-        print(f"you will turn {age + 1}.")
-    print("\nRemember that every day could be your last.")
-    print(f"Will you even live to see the year {date.today().year + 1}?")
+            st.write(f"Tomorrow you will turn {age + 1}.")
+        st.write(f"")
+    st.write("\nRemember that every day could be your last.")
+    st.write(f"Will you even live to see the year {date.today().year + 1}?")
     if age < LIFE_EXPECTANCY:
-        print(f"\nImagine that you will die at the age of {LIFE_EXPECTANCY}.")
-        print("Which would leave you a remaining lifespan of …")
-        print(
-            f"\n{remaining['years']} years. "
+        st.write(f"\nImagine that you will die at the age of {LIFE_EXPECTANCY}.")
+        st.write("Which would leave you a remaining lifespan of …")
+        st.write(
+            f"\n:red[{remaining['years']} years.] "
             f"That is {remaining['weeks']:,} weeks, "
             f"or {remaining['days']:,} days.")
-        print("How will you spend them?")
-    print("\n💀 Memento mori - remember that you will die.")
-    print("✨ But even more important: remember to LIVE!")
+        st.write("How will you spend them?")
+    st.write("\n💀 Memento mori - remember that you will die.")
+    st.write("✨ But even more important: remember to LIVE!")
 
 
-if __name__ == "__main__":
-    main()
+st.title("Memento Mori")
+
+date_of_birth = st.date_input(
+    label="When were you born?",
+    value=date(1980, 1, 1),
+    min_value=date(1920, 1, 1),
+    max_value=date.today(),
+)
+
+if date_of_birth:
+    main(date_of_birth)
+
