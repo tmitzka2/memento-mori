@@ -25,7 +25,7 @@ def get_age(date_of_birth: datetime.date) -> int:
     """Calculate and return the user's age in years."""
     today = date.today()
     age_timedelta = today - date_of_birth
-    age = round(
+    age = int(
         # 3,600 seconds per hour, 24 hours per day,
         # 365 days per year (accounting for leap years).
         age_timedelta.total_seconds() / (365.2425 * 24 * 3600)
