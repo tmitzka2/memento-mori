@@ -1,6 +1,7 @@
 # memento-mori
 
-Takes the date of birth to show a reminder of our mortality.
+A web app made with *Streamlit*. Takes the user's date of birth to show a
+reminder of our mortality.
 
 **https://memento-mori.streamlit.app**
 
