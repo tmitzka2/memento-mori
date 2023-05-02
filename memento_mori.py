@@ -4,8 +4,7 @@ Display a message about life and mortality,
 based on the user's date of birth.
 """
 
-from datetime import date, datetime
-from calendar import month_name, monthrange
+from datetime import date, datetime, timedelta
 
 from dateutil.relativedelta import relativedelta
 import streamlit as st
@@ -13,36 +12,12 @@ import streamlit as st
 
 def get_date_of_birth() -> datetime.date:
     """Let the user enter a date of birth."""
-    st.write("When were you born?")
-    columns = st.columns(3)
-
-    # Get the year.
-    current_year = date.today().year
-    birth_year = columns[0].number_input(
-        label="Year:",
-        min_value=current_year - 100,
-        max_value=current_year,
-        value=current_year - 20,
+    date_of_birth = st.date_input(
+        label="When were you born?",
+        value=date.today() - relativedelta(years=20),
+        min_value=date.today() - relativedelta(years=100),
+        max_value=date.today() - timedelta(days=1),
     )
-
-    # Get the month.
-    month_names = month_name[1:13]
-    birth_month_name = columns[1].selectbox("Month:", month_names)
-    birth_month = month_names.index(birth_month_name) + 1
-
-    # Get the day.
-    days_in_month = monthrange(
-        birth_year,
-        birth_month,
-    )
-    birth_day = columns[2].number_input(
-        label="Day:",
-        min_value=1,
-        max_value=days_in_month[1],
-    )
-
-    # Create date of birth.
-    date_of_birth = date(birth_year, birth_month, birth_day)
     return date_of_birth
 
 
