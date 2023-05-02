@@ -12,11 +12,12 @@ import streamlit as st
 
 def get_date_of_birth() -> datetime.date:
     """Let the user enter a date of birth."""
+    today = date.today()
     date_of_birth = st.date_input(
         label="When were you born?",
-        value=date.today() - relativedelta(years=20),
-        min_value=date.today() - relativedelta(years=100),
-        max_value=date.today() - timedelta(days=1),
+        value=date(today.year - 20, 1, 1),
+        min_value=today - relativedelta(years=100),
+        max_value=today - timedelta(days=1),
     )
     return date_of_birth
 
